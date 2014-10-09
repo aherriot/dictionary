@@ -4,7 +4,7 @@ $( document ).ready(function() {
 			event.preventDefault();
 
 			lookupWord($("#searchBox").val());
-	})	
+	})
 
 });
 
@@ -13,7 +13,6 @@ var toLang = "fa";
 var results = $("#results");
 
 function lookupWord(searchText) {
-
 
 	results.html("...");
 
@@ -73,9 +72,8 @@ function sucessHandler(data) {
 
 	$("#searchBox").val(data.title);
 
-
 	if(data.langlinks === undefined) {
-		results.html("Term not found!").removeClass("persian");
+		results.html("Translation not found!").removeClass("persian");
 		return;
 	}
 
@@ -88,5 +86,4 @@ function sucessHandler(data) {
 	}
 
 	results.html('<a href="' + data["url"] + '" target="_blank">' + data["*"] + '</a>');
-
 }

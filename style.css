@@ -34,6 +34,21 @@ body {
     text-decoration: none;
 }
 
+
+#footer p {
+  text-align: center;
+  color: #e27575;
+}
+
+#footer a {
+  color: #e27575;
+}
+
+#footer a:visited {
+  color: #e27575;
+}
+
+
 .persian {
     direction: rtl;
 }
@@ -76,7 +91,7 @@ input[type="submit"], button {
     background: #E27575;
     border: 1px none #DADADA;
     border-radius: 0px 5px 5px 0px;
-    
+
     float: right;
     padding: 10px 25px 10px 25px;
     margin-right: 10px;
