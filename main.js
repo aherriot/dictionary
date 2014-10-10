@@ -1,10 +1,17 @@
-$( document ).ready(function() {
+$(document).ready(function() {
 
-	$("#searchForm").submit(function(event){
-			event.preventDefault();
+  $("#searchForm").submit(function(event) {
+    event.preventDefault();
 
-			lookupWord($("#searchBox").val());
-	})
+    lookupWord($("#searchBox").val());
+  })
+
+
+  var term = decodeURIComponent(window.location.hash.substring(2));
+  if (term.length > 0) {
+    $("#searchBox").val(term);
+    lookupWord($("#searchBox").val());
+  }
 
 });
 
@@ -14,76 +21,78 @@ var results = $("#results");
 
 function lookupWord(searchText) {
 
-	results.html("...");
+  results.html("...");
 
-	if(searchText.length == 0) {
-		results.html("Search text must not be blank.")
-			.removeClass("persian");
+  if (searchText.length == 0) {
+    results.html("Search text must not be blank.")
+      .removeClass("persian");
 
-		return;
-	}
-	var persian = /[\u0600-\u06FF]/;
+    return;
+  }
+  var persian = /[\u0600-\u06FF]/;
 
-	if(persian.test(searchText)) {
-		searchText = encodeURI(searchText);
-		fromLang = "fa";
-		toLang = "en";
-	}	else {
-		fromLang = "en";
-		toLang = "fa";
-	}
+  if (persian.test(searchText)) {
+    searchText = encodeURI(searchText);
+    fromLang = "fa";
+    toLang = "en";
+  } else {
+    fromLang = "en";
+    toLang = "fa";
+  }
 
-	var url = "//" + fromLang +".wikipedia.org/w/api.php"
-		+ "?action=query"
-	 	+ "&prop=langlinks"
-	 	+ "&format=json"
-	 	+ "&lllimit=100"
-	 	+ "&llprop=url"
-	 	+ "&lllang=" + toLang
-	 	//+ "&llinlanguagecode=" + "fa"
-	 	+ "&titles=" + searchText
-	 	+ "&redirects=";
+  var url = "//" + fromLang + ".wikipedia.org/w/api.php"
+    + "?action=query"
+    + "&prop=langlinks"
+    + "&format=json"
+    + "&lllimit=100"
+    + "&llprop=url"
+    + "&lllang=" + toLang
+    + "&titles=" + searchText
+    + "&redirects=";
 
-	 console.log(url);
+  console.log(url);
 
-	$.ajax({
-		url: url,
-		dataType: "jsonp",
-		cache: true,
-		success: sucessHandler,
-		error: function(data) {
-			results.html("Lookup failed!").removeClass("persian");;
-		}
-	});
+  $.ajax({
+    url: url,
+    dataType: "jsonp",
+    cache: true,
+    success: sucessHandler,
+    error: function(data) {
+      results.html("Lookup failed!").removeClass("persian");;
+    }
+  });
 }
 
 function sucessHandler(data) {
 
-	//console.log(data);
-	data = data.query.pages;
+  //console.log(data);
+  data = data.query.pages;
 
-	if(data.hasOwnProperty("-1")) {
-		results.html("Term not found!").removeClass("persian");;
-		return;
-	}
+  if (data.hasOwnProperty("-1")) {
+    results.html("Term not found!").removeClass("persian");;
+    return;
+  }
 
-	data = data[Object.keys(data)[0]];
-	//console.log(data);
+  data = data[Object.keys(data)[0]];
+  //console.log(data);
 
-	$("#searchBox").val(data.title);
+  history.pushState({}, "Dictionary: " + data.title, "#/" +
+    encodeURIComponent(data.title));
 
-	if(data.langlinks === undefined) {
-		results.html("Translation not found!").removeClass("persian");
-		return;
-	}
+  $("#searchBox").val(data.title);
 
-	data = data.langlinks[0];
+  if (data.langlinks === undefined) {
+    results.html("Translation not found!").removeClass("persian");
+    return;
+  }
 
-	if(toLang === 'fa') {
-		results.addClass("persian");
-	} else {
-		results.removeClass("persian");
-	}
+  data = data.langlinks[0];
 
-	results.html('<a href="' + data["url"] + '" target="_blank">' + data["*"] + '</a>');
+  if (toLang === 'fa') {
+    results.addClass("persian");
+  } else {
+    results.removeClass("persian");
+  }
+
+  results.html('<a href="' + data["url"] + '" target="_blank">' + data["*"] + '</a>');
 }
