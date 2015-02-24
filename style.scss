@@ -1,0 +1,113 @@
+$primary-colour: #2E7D32;
+$primary-light-colour: #4CAF50;
+
+body {
+    background-color: #CCC;
+}
+
+#wrapper {
+  font-family: Georgia, Times, serif;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 0px;
+  border-top: 3px solid $primary-colour;
+
+  box-shadow: 5px 5px 10px #999;
+  -moz-box-shadow: 5px 5px 10px #999;
+  -webkit-box-shadow: 5px 5px 10px #999;
+}
+
+#resultsWrapper {
+  border: 2px dashed $primary-colour;
+  padding: 10px;
+  margin: 10px;
+
+  img {
+    width: 20px;
+    height: 20px;
+    float: right;
+  }
+}
+
+#results a {
+    margin: 0 auto;
+    font-size: 2em;
+    color: $primary-colour;
+    text-decoration: none;
+}
+
+
+#footer {
+  p {
+    text-align: center;
+    color: $primary-colour;
+  }
+
+  a, a:visited {
+    color: $primary-light-colour;
+  }
+}
+
+.persian {
+    direction: rtl;
+}
+
+.formAlign {
+    overflow: hidden;
+    padding-right: -2em;
+}
+
+h2 {
+    text-align: center;
+    color: $primary-colour;
+    padding-top: 0px;
+}
+
+form {
+    text-align: center;
+}
+
+input[type="text"] {
+    border: 1px solid #DADADA;
+    color: #888888;
+    padding-left: 10px;
+
+    width: 95%;
+    margin-left: 10px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 20px;
+
+    outline: 0 none;
+    border-radius: 0px 0px 0px 0px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+}
+
+input[type="submit"], button {
+    color: #FFF;
+    background: $primary-colour;
+    border: 1px none #DADADA;
+    border-radius: 0px;
+
+    float: right;
+    padding: 10px 25px 10px 25px;
+    margin-right: 10px;
+    margin-left: 0px;
+    /*line-height: 15px;*/
+    height: 34px;
+
+    box-shadow: 1px 1px 5px #B6B6B6;
+    -moz-box-shadow: 1px 1px 5px #B6B6B6;
+    -webkit-box-shadow: 1px 1px 5px #B6B6B6;
+
+    text-shadow: 1px 1px 1px #9E3F3F;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background: $primary-light-colour;
+}

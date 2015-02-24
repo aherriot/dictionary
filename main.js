@@ -1,3 +1,8 @@
+var fromLang;
+var toLang = "fa";
+var results = $("#results");
+
+
 $(document).ready(function() {
 
   $("#searchForm").submit(function(event) {
@@ -6,18 +11,14 @@ $(document).ready(function() {
     lookupWord($("#searchBox").val());
   })
 
-
+  //Check if URL has term in it and look it up.
   var term = decodeURIComponent(window.location.hash.substring(2));
   if (term.length > 0) {
     $("#searchBox").val(term);
-    lookupWord($("#searchBox").val());
+    lookupWord(term);
   }
 
 });
-
-var fromLang;
-var toLang = "fa";
-var results = $("#results");
 
 function lookupWord(searchText) {
 
@@ -50,8 +51,6 @@ function lookupWord(searchText) {
     + "&titles=" + searchText
     + "&redirects=";
 
-  console.log(url);
-
   $.ajax({
     url: url,
     dataType: "jsonp",
@@ -65,7 +64,6 @@ function lookupWord(searchText) {
 
 function sucessHandler(data) {
 
-  //console.log(data);
   data = data.query.pages;
 
   if (data.hasOwnProperty("-1")) {
@@ -74,7 +72,6 @@ function sucessHandler(data) {
   }
 
   data = data[Object.keys(data)[0]];
-  //console.log(data);
 
   history.pushState({}, "Dictionary: " + data.title, "#/" +
     encodeURIComponent(data.title));
